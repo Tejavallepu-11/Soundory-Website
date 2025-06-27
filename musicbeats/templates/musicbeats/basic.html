@@ -14,7 +14,7 @@
   <body>
     {% load static %}
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    {% comment %} <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <i class="fa-solid fa-music fa-2xl" style="color: #63E6BE; margin-right:4px;"></i>   <a class="navbar-brand" href="/"style="color: #63E6BE;">Soundory</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -85,8 +85,83 @@
           </a>
         </div>  
         {% endif %}
-    </nav>
+    </nav> {% endcomment %}
    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+      <a class="navbar-brand d-flex align-items-center" href="/" style="color: #63E6BE;">
+        <i class="fa-solid fa-music fa-lg mr-2" style="color: #63E6BE;"></i> Soundory
+      </a>
+    
+      <!-- Toggle button for collapsed navbar -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <!-- Collapsible part of navbar -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/musicbeats/songs/">Explore Music</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/musicbeats/songs/">Podcasts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/musicbeats/songs/">Explore Premium</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/musicbeats/songs/">Support</a>
+          </li>
+        </ul>
+    
+        {% if user.is_authenticated %}
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Welcome <i class="fa-solid fa-circle-user fa-lg" style="color: #63E6BE;"></i> {{ request.user }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/musicbeats/c/{{request.user}}">Your Channel</a>
+              <a class="dropdown-item" href="/musicbeats/upload">Upload Your Song</a>
+              <a class="dropdown-item" href="/musicbeats/watchlater">Listen Later</a>
+              <a class="dropdown-item" href="/musicbeats/history">History</a>
+              <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+            </div>
+          </li>
+        </ul>
+        <script>
+          function logout() {
+            Swal.fire({
+              title: 'Are you sure you want to Log out?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes!'
+            }).then((result) => {
+              if (result.value) {
+                document.location = "/musicbeats/logout_user"
+              }
+            });
+          }
+        </script>
+        {% else %}
+        <div class="d-flex ml-auto mt-2 mt-lg-0">
+          <a href="/musicbeats/login" class="mr-2">
+            <button class="btn btn-outline-danger btn-sm px-4 rounded-pill">Login</button>
+          </a>
+          <a href="/musicbeats/signup">
+            <button class="btn btn-danger btn-sm px-4 rounded-pill">Signup</button>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </nav>
     
     {% block body %}
     

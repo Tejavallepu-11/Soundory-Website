@@ -46,11 +46,11 @@ from django.db.models import Case, When
 # from .models import Song, Watchlater, liked
 
 def index(request):
-    song = Song.objects.all()[0:3]
+    song = Song.objects.all()[0:5]
 
     # Default values
-    watch = Song.objects.all()[0:3]
-    user_likes = Song.objects.all()[0:3]
+    watch = Song.objects.all()
+    user_likes = Song.objects.all()
 
     if request.user.is_authenticated:
         # Watchlater Songs
