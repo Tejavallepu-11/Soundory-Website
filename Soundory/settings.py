@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-m0#b2-c-p4r=9totofef%=8sh26(8g5q8hmy#$q*(g)3$!xwhp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://soundorys.onrender.com']
 
 
 # Application definition
