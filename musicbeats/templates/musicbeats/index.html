@@ -1,0 +1,100 @@
+{%extends 'musicbeats/basic.html'%}
+{% block title%}MusicBeats{% endblock %}
+
+{% block body %}
+    {% load static %} 
+    <div class="hero-section text-white" style="
+    background: linear-gradient(160deg, #0f0c29, #302b63, #24243e);
+    padding: 100px 20px;
+    text-align: center;
+    border-radius: 0 0 40px 40px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-3" style="font-family: 'Segoe UI', sans-serif;">
+            🎵 Welcome to <span style="color: #1DB954;">Soundory</span>
+        </h1>
+        <p class="lead mb-4" style="font-size: 1.25rem;">
+            Discover trending music, vibe nonstop, and upload your own tracks!
+        </p>
+
+        <!-- Search Bar -->
+        <form method="GET" action="/musicbeats/search" class="d-flex justify-content-center mt-3">
+          <input name="query" class="form-control w-50 rounded-start-pill mr-2" type="search" placeholder="What do you want to play?" aria-label="Search" style="width:500px; border-radius:25px;">
+          <button class="btn btn-success rounded-end-pill px-4" type="submit">Search</button>
+         </form>
+        <!-- Buttons -->
+        {% comment %} <div class="mt-4">
+            <a href="/musicbeats/songs/" class="btn btn-outline-light btn-lg me-3 px-4 rounded-pill">🎧 Explore</a>
+            <a href="/musicbeats/upload" class="btn btn-light btn-lg px-4 rounded-pill">⬆️ Upload</a>
+        </div> {% endcomment %}
+    </div>
+</div>
+
+
+    <!-- ################################ CARDS ##################################################### -->
+<h2 class="mt-5 mb-3 " style="padding-left: 7%;">🔥 Trending Songs</h2>
+
+      <div class="container-fluid px-5">
+        <div class="d-flex flex-row overflow-auto pb-3">
+          {% for i in song %}
+          <!-- Card 1 -->
+          <div class="col-md-4 mb-4">
+            <div class="card flex-shrink-0 shadow" style="border-radius: 15px;">
+              <img src="/media/{{i.image}}" class="card-img-top" style="height: 300px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+              <div class="card-body bg-light" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+                <h5 class="card-title">{{i.name}}</h5>
+                <p class="card-text">{{i.tags}}</p>
+                <p class="card-text">Movie: {{ i.movie }}</p>
+                <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-success w-100">🎧 Listen Song</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div> 
+  <hr>
+      
+      
+  <h3 class="mt-5 mb-3" style="padding-left: 8%; font-family: 'Verdana';">🎧 Your Listen Later</h3>
+  
+  <div class="container-fluid px-5">
+    <div class="d-flex flex-row overflow-auto pb-3" style="scroll-snap-type: x mandatory; gap: 20px;">
+      {% for i in watch reversed %}
+      <div class="card flex-shrink-0 shadow" style="width: 18rem; scroll-snap-align: start; border-radius: 15px;">
+        <img src="/media/{{i.image}}" class="card-img-top" style="height: 200px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+        <div class="card-body bg-light" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+          <h5 class="card-title">{{ i.name }}</h5>
+          <p class="card-text" style="color: green;">Tags: {{ i.tags }}</p>
+          <p class="card-text" style="color: green;">Movie: {{ i.movie }}</p>
+          <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-danger w-100">Listen Song</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <hr>
+
+  <h3 class="mt-5 mb-3" style="padding-left: 8%; font-family: 'Verdana';">🎧 Your Liked Songs</h3>
+  
+  <div class="container-fluid px-5">
+    <div class="d-flex flex-row overflow-auto pb-3" style="scroll-snap-type: x mandatory; gap: 20px;">
+      {% for i in user_likes reversed %}
+      <div class="card flex-shrink-0 shadow" style="width: 18rem; scroll-snap-align: start; border-radius: 15px;">
+        <img src="/media/{{i.image}}" class="card-img-top" style="height: 200px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+        <div class="card-body bg-light" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+          <h5 class="card-title">{{ i.name }}</h5>
+          <p class="card-text" style="color: green;">Tags: {{ i.tags }}</p>
+          <p class="card-text" style="color: green;">Movie: {{ i.movie }}</p>
+          <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-danger w-100">Listen Song</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <hr>
+  
+{% endblock %}
+
+ 
+ 
+ 

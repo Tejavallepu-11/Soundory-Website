@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="/media/images/soundmanagerv297a-20170601/script/soundmanager2.js"></script>
+    <title>{% block title %} {% endblock %}</title>
+  </head>
+  <body>
+    {% load static %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <i class="fa-solid fa-music fa-2xl" style="color: #63E6BE; margin-right:4px;"></i>   <a class="navbar-brand" href="/"style="color: #63E6BE;">Soundory</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/musicbeats/songs/">Explore Music</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/musicbeats/songs/">Podcasts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/musicbeats/songs/">Explore Premium</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/musicbeats/songs/">Support</a>
+          </li>
+        </ul>
+      </div>
+      {% if user.is_authenticated %}
+                <ul class="navbar-nav ml-auto"></ul>
+                <li class="nav nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome <i class="fa-solid fa-circle-user fa-lg" style="color: #63E6BE;"></i> {{request.user}}</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="/musicbeats/c/{{request.user}}">Your Channel</a>
+                      <a class="dropdown-item" href="/musicbeats/upload">Upload Your Song</a>
+                      <a class="dropdown-item" href="/musicbeats/watchlater">Listen Later</a>
+                      <a class="dropdown-item" href="/musicbeats/history">History</a>
+                      <a class="dropdown-item" onclick="logout()">Logout</a>
+                    </div>
+                  </li>
+                </ul>
+                <script>
+                    function logout(){
+                        Swal.fire({
+                            title: 'Are you sure you want to Log out?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes!'
+                            }).then((result) => {
+                            if (result.value) {
+                                document.location = "/musicbeats/logout_user"
+                            }
+                        })
+                    }
+                </script>
+
+        {% else %}
+        
+
+        <div class="d-flex justify-content-end align-items-center">
+          <a href="/musicbeats/login">
+            <button class="btn btn-outline-danger btn-sm px-4 rounded-pill" style="margin-right:4px;">
+              Login
+            </button>
+          </a>
+          <a href="/musicbeats/signup">
+            <button class="btn btn-danger btn-sm px-4 rounded-pill">
+              Signup
+            </button>
+          </a>
+        </div>  
+        {% endif %}
+    </nav>
+   
+    
+    {% block body %}
+    
+    {% endblock %}
+
+    <!-- Footer -->
+<footer class="footer text-center" style="background-color: #343a40; color: #fff; padding: 20px 0; margin-top:23px">
+  <div class="container">
+      <p style="margin-bottom: 0;">Copyright &copy; 2025. All rights reserved.</p>
+      <p style="margin-bottom: 0;">Designed by <span style=" opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; font-weight: 400; margin: 0px 5px;
+    font-family: 'Dancing Script', cursive; color:yellow;" > Vidhyanand, Vishnu, Tharun, Teja.</span></p>
+  </div>
+</footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    {% block js %}
+    {% endblock %}
+</body> 
+</html>
+
+
+
+

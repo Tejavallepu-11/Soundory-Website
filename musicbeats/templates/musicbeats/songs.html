@@ -1,0 +1,48 @@
+{%extends 'musicbeats/basic.html'%}
+{% block title%}All Songs{% endblock %}
+
+{% block body %}
+<div class="container">
+<h2 class="mt-4 mb-3 ps-4" style="font-family: 'Segoe UI'; font-weight: bold;">
+  🎵 Explore All Music on <span style="color: #ff4d6d;">Soundory</span>
+</h2>
+<p class="ps-4" style="font-size: 1rem;">
+  From trending tracks to hidden gems – stream everything in one place. 🔁
+</p>
+</div>
+<div class="container">
+  <div class="row">
+    {% for i in song reversed %}
+    <div class="col-md-6 d-flex justify-content-center">
+      <div class="card mb-3" style="max-width: 540px; margin-top: 20px; width: 100%;">
+        <div class="row no-gutters">
+          <div class="col-md-4 ">
+            <img src="/media/{{ i.image }}" class="card-img" alt="{{ i.name }}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title" style="color: green; font-weight: 550;">{{ i.name }}</h5>
+              <p class="card-text">Tags: {{ i.tags }}</p>
+              <p class="card-text">Movie: {{ i.movie }}</p>
+              
+              {% if user.is_authenticated %}
+              <form action="/musicbeats/history" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="music_id" value="{{ i.song_id }}">
+                <button type="submit" class="btn btn-outline-danger">Listen Song</button>
+              </form>
+              {% else %}
+              <a href="/musicbeats/songs/{{ i.song_id }}" class="btn btn-outline-danger">Listen Song</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+
+
