@@ -18,5 +18,5 @@ Soundory is a full-stack Django web application that allows users to explore and
 
 - **Backend**: Python, Django  
 - **Frontend**: HTML, CSS, Bootstrap, JavaScript  
-- **Database**: SQLite (default)  
+- **Database**: SQLite 
 - **Other**: Pillow (for image handling), Gmail SMTP for email
