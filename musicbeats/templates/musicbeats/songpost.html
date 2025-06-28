@@ -15,7 +15,7 @@
     </script>
 {% endif %}
 
-<div class="container">
+{% comment %} <div class="container">
     <div class="row">
         <div class="col-md-6" style="padding-top: 3%;">
             <img src="/media/{{song.image}}" alt="" height="350px" width="350px">
@@ -36,7 +36,7 @@
             <form action="/musicbeats/watchlater/" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="video_id" value="{{song.song_id}}">
-                <button type="submit" class="btn btn-outline-danger" id="submit_btn">Add to Listen Later</button>
+                <button type="submit" class="btn btn-outline-danger" id="submit_btn">Add to Playlist</button>
             </form>
             <a download href="/media/{{song.song}}" style="padding-left: 1%;"><button class="btn btn-outline-danger">Download Song</button></a>
 
@@ -50,9 +50,54 @@
         </div>
         </div>
     </div>
-</div>
+</div> {% endcomment %}
 
 
+<div class="container py-5">
+    <div class="row align-items-center">
+      <!-- Song Image -->
+      <div class="col-md-6 mb-4 mb-md-0 d-flex justify-content-center">
+        <img src="/media/{{ song.image }}" alt="{{ song.name }}" class="img-fluid rounded shadow" style="max-width: 100%; height: auto; max-height: 350px; object-fit: cover;">
+      </div>
+  
+      <!-- Song Info and Actions -->
+      <div class="col-md-6">
+        <h2 class="fw-semibold text-success">🎵 {{ song.name }}</h2>
+        <p class="mb-2"><strong>Category:</strong> {{ song.tags }}</p>
+        <p class="mb-2"><strong>Movie:</strong> {{ song.movie }}</p>
+        <p class="mb-4"><strong>Singer:</strong> {{ song.singer }}</p>
+  
+        <!-- Audio Player -->
+        <audio controls class="w-100 mb-4">
+          <source src="/media/{{ song.song }}" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+  
+        <!-- Action Buttons -->
+        <div class="d-flex flex-wrap gap-2">
+          <!-- Watch Later -->
+          <form action="/musicbeats/watchlater/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="video_id" value="{{ song.song_id }}">
+            <button type="submit" class="btn btn-outline-danger">➕ Add to Playlist</button>
+          </form>
+  
+          <!-- Download -->
+          <a href="/media/{{ song.song }}" download>
+            <button class="btn btn-outline-success ml-2">⬇️ Download</button>
+          </a>
+  
+          <!-- Like -->
+          <form action="/musicbeats/liked/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="video_id" value="{{ song.song_id }}">
+            <button type="submit" class="btn btn-outline-primary ml-2">❤️ Like</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 <script>
 
 </script>

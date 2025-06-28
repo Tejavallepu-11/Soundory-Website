@@ -1,0 +1,39 @@
+{%extends 'musicbeats/basic.html'%}
+{% block title%}MusicBeats{% endblock %}
+
+{% block body %}
+    {% load static %}
+    <div class="container">
+        <h2 class="mt-4 mb-3 ps-4" style="font-family: 'Segoe UI'; font-weight: bold;">
+          🎵 Explore All Podcasts on <span style="color: #ff4d6d;">Soundory</span>
+        </h2>
+    </div>
+
+
+        {% load static %}
+        <div class="container py-5">
+          <h2 class="text-center mb-5" style="color: #198754;">🎙️ Featured Podcasts</h2>
+        
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for podcast in podcasts %}
+            <div class="col">
+              <div class="card h-100 shadow-sm border-0" style="border-radius: 15px;">
+                <img src="/media/{{ podcast.image }}" class="card-img-top" alt="{{ podcast.title }}" style="height: 200px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                <div class="card-body">
+                  <h5 class="card-title">{{ podcast.title }}</h5>
+                  <p class="card-text text-muted">{{ podcast.description|truncatechars:100 }}</p>
+                  <audio controls class="w-100">
+                    <source src="/media/{{ podcast.audio }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                  </audio>
+                </div>
+                <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
+                  <a href="/media/{{ podcast.audio }}" download class="btn btn-outline-success btn-sm">⬇️ Download</a>
+                  <span class="text-muted" style="font-size: 14px;">By {{ podcast.creator }}</span>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+{% endblock %}

@@ -4,47 +4,6 @@ from django.contrib.auth.models import User
 from musicbeats.models import Song
 from musicbeats.models import Watchlater, liked
 
-
-# def index(request):
-#     song =Song.objects.all()
-#     return render(request,'index.html',{'song':song})
-# def index(request):
-#     song = Song.objects.all()[0:3]
-
-#     if request.user.is_authenticated:
-#         wl = Watchlater.objects.filter(user=request.user)
-#         ids = []
-#         for i in wl:
-#             ids.append(i.video_id)
-        
-#         preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(ids)])
-#         watch = Song.objects.filter(song_id__in=ids).order_by(preserved) 
-#         watch = reversed(watch)
-    
-#     else:
-#         watch = Song.objects.all()[0:3]
-        
-
-#     if request.user.is_authenticated:
-#         # Get liked song IDs
-#         liked_songs = liked.objects.filter(user=request.user)
-#         liked_ids = []
-#         for i in liked_songs:
-#             liked_ids.append(i.video_id)
-        
-#         preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(ids)])
-#         user_likes = Song.objects.filter(song_id__in=ids).order_by(preserved) 
-#         user_likes = reversed(user_likes)
-    
-#     else:
-#         user_likes = Song.objects.all()[0:3]
-
-#     return render(request, 'index.html', {'song': song, 'watch': watch, 'user_likes':user_likes})
-
-from django.shortcuts import render
-from django.db.models import Case, When
-# from .models import Song, Watchlater, liked
-
 def index(request):
     song = Song.objects.all()[0:5]
 

@@ -15,7 +15,16 @@ class Song(models.Model):
     
     def __str__(self):
         return self.name
-    
+
+class Podcast(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    image = models.ImageField(upload_to='images')
+    audio = models.FileField(upload_to='songs/')
+    creator = models.CharField(max_length=50)
+    def __str__(self):
+        return self.title
+
 class Watchlater(models.Model):
     watch_id = models.AutoField(primary_key=True)
     user =models.ForeignKey(User, on_delete=models.CASCADE)

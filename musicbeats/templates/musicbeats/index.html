@@ -32,27 +32,6 @@
 
 
     <!-- ################################ CARDS ##################################################### -->
-{% comment %} <h2 class="mt-5 mb-3 " style="padding-left: 7%;">🔥 Trending Songs</h2>
-
-      <div class="container-fluid px-5">
-        <div class="d-flex flex-row overflow-auto pb-3">
-          {% for i in song %}
-          <!-- Card 1 -->
-          <div class="col-md-4 mb-4">
-            <div class="card flex-shrink-0 shadow" style="border-radius: 15px;">
-              <img src="/media/{{i.image}}" class="card-img-top" style="height: 300px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-              <div class="card-body bg-light" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
-                <h5 class="card-title">{{i.name}}</h5>
-                <p class="card-text">{{i.tags}}</p>
-                <p class="card-text">Movie: {{ i.movie }}</p>
-                <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-success w-100">🎧 Listen Song</a>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>  {% endcomment %}
-
       <h2 class="mt-5 mb-3" style="padding-left: 7%;">🔥 Trending Songs</h2>
 
 <div class="container-fluid px-5">
@@ -75,7 +54,7 @@
   <hr>
       
       
-  <h3 class="mt-5 mb-3" style="padding-left: 8%; font-family: 'Verdana';">🎧 Your Listen Later</h3>
+  <h3 class="mt-5 mb-3" style="padding-left: 8%; font-family: 'Verdana';">🎧 Your Playlist Songs</h3>
   
   <div class="container-fluid px-5">
     <div class="d-flex flex-row overflow-auto pb-3" style="scroll-snap-type: x mandatory; gap: 20px;">
@@ -94,7 +73,7 @@
   </div>
   <hr>
 
-  <h3 class="mt-5 mb-3" style="padding-left: 8%; font-family: 'Verdana';">🎧 Your Liked Songs</h3>
+  <h3 class="mt-5 mb-3" style="padding-left: 8%; font-family: 'Verdana';">❤️ Your Liked Songs</h3>
   
   <div class="container-fluid px-5">
     <div class="d-flex flex-row overflow-auto pb-3" style="scroll-snap-type: x mandatory; gap: 20px;">

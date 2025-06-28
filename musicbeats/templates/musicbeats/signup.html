@@ -3,7 +3,7 @@
 
 {% block body %}
 
-<div class="container my-4 bg-light" style="width: 500px;">
+{% comment %} <div class="container my-4 bg-light" style="width: 500px;">
     <form method="POST" action="/musicbeats/signup/">
         {% csrf_token %}
         <div class="form-group p-1">
@@ -34,5 +34,53 @@
           <button type="submit" class="btn btn-primary">SignUp</button>
         </div>
       </form>
+    </div> {% endcomment %}
+
+    <div class="container d-flex justify-content-center align-items-center vh-80 mt-3">
+      <div class="card shadow-lg p-4" style="width: 420px; border-radius: 20px;">
+        <h3 class="text-center mb-3">🎧 Join Soundory</h3>
+        <p class="text-muted text-center mb-4">Create your free account</p>
+    
+        <form method="POST" action="/musicbeats/signup/">
+          {% csrf_token %}
+    
+          <div class="mb-3">
+            <label for="email" class="form-label">📧 Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+          </div>
+    
+          <div class="mb-3">
+            <label for="username" class="form-label">👤 Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Choose a username" required>
+          </div>
+    
+          <div class="mb-3">
+            <label for="firstname" class="form-label">🧑 First Name</label>
+            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Your first name" required>
+          </div>
+    
+          <div class="mb-3">
+            <label for="lastname" class="form-label">👪 Last Name</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Your last name" required>
+          </div>
+    
+          <div class="mb-3">
+            <label for="pass1" class="form-label">🔒 Password</label>
+            <input type="password" class="form-control" id="pass1" name="pass1" placeholder="••••••••" required>
+          </div>
+    
+          <div class="mb-4">
+            <label for="pass2" class="form-label">🔐 Confirm Password</label>
+            <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Repeat your password" required>
+          </div>
+    
+          <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        </form>
+    
+        <p class="mt-4 text-center">
+          Already a member? <a href="/musicbeats/login" class="text-decoration-none">Login</a>
+        </p>
+      </div>
     </div>
+    
    {% endblock %}

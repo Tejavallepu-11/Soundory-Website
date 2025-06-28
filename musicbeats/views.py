@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponse
-from musicbeats.models import Song, Watchlater, History, Channel, liked
+from musicbeats.models import Song, Watchlater, History, Channel, liked , Podcast
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
@@ -94,6 +94,13 @@ def songs(request):
     song =Song.objects.all()
     return render(request, 'musicbeats/songs.html',{'song':song})
 
+def podcast(request):
+    podcasts = Podcast.objects.all()
+    return render(request, 'musicbeats/podcast.html',{'podcasts':podcasts})
+
+def premium(request):
+    return render(request, 'premium.html')
+
 def songpost(request,id):
     song=Song.objects.filter(song_id=id).first()
     return render(request, 'musicbeats/songpost.html',{'song':song})
@@ -109,7 +116,11 @@ def login(request):
             django_login(request,user)
             return redirect('/')
         else:
-            return HttpResponse("<h2>Invalid Credentials</h2>")
+            return HttpResponse("""<div style="text-align:center; margin-top:50px;">
+            <h2 style="color:red;">Invalid Credentials</h2>
+            <a href="/musicbeats/login/" style="text-decoration:none;">
+                <button style="margin-top:20px; padding:10px 20px; background:#dc3545; color:white; border:none; border-radius:5px;">Back to Login</button>
+            </a></div>""")
         
     return render(request,'musicbeats/login.html')
 
@@ -124,9 +135,6 @@ def signup(request):
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
 
-        
-
-            
         myuser = User.objects.create_user(username, email, pass1)
         myuser.first_name = first_name
         myuser.last_name = last_name
@@ -181,3 +189,34 @@ def upload(request):
             i.save()
 
     return render(request, "musicbeats/upload.html")
+
+
+
+
+
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.conf import settings
+
+def support_page(request):
+    return render(request, 'support.html')
+
+def support_submit(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        message = request.POST['message']
+
+        full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+
+        # Send email to admin/support (only if email setup is configured)
+        send_mail(
+            subject=f'Support Request from {name}',
+            message=full_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.DEFAULT_FROM_EMAIL],
+            fail_silently=False
+        )
+
+        messages.success(request, 'Thank you for contacting us! We’ll get back to you soon.')
+        return redirect('support')
