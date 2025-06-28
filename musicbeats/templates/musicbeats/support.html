@@ -16,17 +16,17 @@
   <form method="POST" action="{% url 'support_submit' %}" class="col-md-8 mx-auto shadow p-4">
     {% csrf_token %}
     <div class="mb-3">
-      <label class="form-label">Your Name</label>
+      <label class="form-label">👤 Your Name</label>
       <input type="text" name="name" class="form-control" required>
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Your Email</label>
+      <label class="form-label">📧 Your Email</label>
       <input type="email" name="email" class="form-control" required>
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Message</label>
+      <label class="form-label">💬 Message</label>
       <textarea name="message" rows="5" class="form-control" required></textarea>
     </div>
 
