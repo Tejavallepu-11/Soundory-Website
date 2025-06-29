@@ -1,17 +1,22 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse , redirect
 from musicbeats.models import Song, Watchlater, History, Channel, liked , Podcast
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect
 from django.db.models import Case, When
+from django.contrib.auth.decorators import login_required
+from .forms import UserUpdateForm
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.conf import settings
 
-
+########   Search_views   #########
 def search(request):
     query = request.GET.get("query")
     song = Song.objects.all()
     qs = song.filter(name__icontains=query)
     return render(request, 'musicbeats/search.html',{'songs':qs , 'query':query})
 
+########   History_views   #########
 def history(request):
     if request.method == "POST":
         user = request.user
@@ -31,80 +36,78 @@ def history(request):
 
     return render(request, 'musicbeats/history.html', {"history": song})
 
-
+  ########   Playlist_views   #########  
 def watchlater(request):
+    user = request.user
     if request.method == "POST":
-        user = request.user
         video_id = request.POST['video_id']
+        existing = Watchlater.objects.filter(user=user, video_id=video_id).first()
 
-        watch = Watchlater.objects.filter(user=user)
-        
-        for i in watch:
-            if video_id == i.video_id:
-                message = "Your Song is Already Added"
-                break
+        if existing:
+            existing.delete()
+            message = "Removed from Playlist"
         else:
-            watchlater = Watchlater(user=user, video_id=video_id)
-            watchlater.save()
-            message = "Your Song is Succesfully Added"
-
+            Watchlater.objects.create(user=user, video_id=video_id)
+            message = "Added to Playlist"
         song = Song.objects.filter(song_id=video_id).first()
         return render(request, "musicbeats/songpost.html", {'song': song, "message": message})
+    wl = Watchlater.objects.filter(user=user)
+    ids = [i.video_id for i in wl]
 
-    wl = Watchlater.objects.filter(user=request.user)
-    ids = []
-    for i in wl:
-        ids.append(i.video_id)
-    
-    preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(ids)])
-    song = Song.objects.filter(song_id__in=ids).order_by(preserved)
+    preserved = Case(*[When(song_id=pk, then=pos) for pos, pk in enumerate(ids)])
+    songs = Song.objects.filter(song_id__in=ids).order_by(preserved)
 
-    return render(request, "musicbeats/watchlater.html", {'song': song})
-    
+    return render(request, "musicbeats/watchlater.html", {'song': songs})
 
-def liked_view(request):  
+
+########   Liked_views   #########
+def liked_view(request):
+    user = request.user
+
     if request.method == "POST":
-        user = request.user
         video_id = request.POST['video_id']
+        like_obj = liked.objects.filter(user=user, video_id=video_id).first()
 
-        user_likes = liked.objects.filter(user=user)
-
-        for i in user_likes:
-            if video_id == i.video_id:
-                message = "Your Song is Already Liked"
-                break
+        if like_obj:
+            like_obj.delete()
+            message = "Removed from Liked Songs"
         else:
-            like_instance = liked(user=user, video_id=video_id)
-            like_instance.save()
-            message = "Your Song is Successfully Liked"
-
+            liked.objects.create(user=user, video_id=video_id)
+            message = "Added to Liked Songs"
         song = Song.objects.filter(song_id=video_id).first()
-        return render(request, "musicbeats/songpost.html", {'song': song, "message": message})
-
-    liked_songs = liked.objects.filter(user=request.user)
+        return render(request, "musicbeats/songpost.html", {'song': song, 'message': message})
+    liked_songs = liked.objects.filter(user=user)
     liked_ids = [i.video_id for i in liked_songs]
 
-    preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(liked_ids)])
-    song = Song.objects.filter(song_id__in=liked_ids).order_by(preserved)
+    preserved = Case(*[When(song_id=pk, then=pos) for pos, pk in enumerate(liked_ids)])
+    songs = Song.objects.filter(song_id__in=liked_ids).order_by(preserved)
 
-    return render(request, "musicbeats/liked.html", {'song': song})
+    return render(request, "musicbeats/liked.html", {'song': songs})
 
-
+########   Songs_views   #########
 def songs(request):
     song =Song.objects.all()
     return render(request, 'musicbeats/songs.html',{'song':song})
 
+
+########   Podcast_views   #########
 def podcast(request):
     podcasts = Podcast.objects.all()
     return render(request, 'musicbeats/podcast.html',{'podcasts':podcasts})
 
+
+########   Premium_views   #########
 def premium(request):
     return render(request, 'premium.html')
 
+
+########   SongsPost_views   #########
 def songpost(request,id):
     song=Song.objects.filter(song_id=id).first()
     return render(request, 'musicbeats/songpost.html',{'song':song})
 
+
+########   Login_views   ########
 def login(request):
     if request.method=="POST":
         username =request.POST['username']
@@ -125,7 +128,7 @@ def login(request):
     return render(request,'musicbeats/login.html')
 
 
-
+########   Signup_views   #########
 def signup(request):
     if request.method == "POST":
         email = request.POST['email']
@@ -152,10 +155,12 @@ def signup(request):
 
     return render(request, 'musicbeats/signup.html')
 
+########   LogOut_views   #########
 def logout_user(request):
     logout(request)
     return redirect("/")
 
+########   Channel_views   #########
 def channel(request, channel):
     chan = Channel.objects.filter(name=channel).first()
     video_ids = str(chan.music).split(" ")[1:]
@@ -165,16 +170,14 @@ def channel(request, channel):
 
     return render(request, "musicbeats/channel.html", {"channel": chan, "song": song})
 
-
+########   Upload_views   #########
 def upload(request):
     if request.method == "POST":
         name = request.POST['name']
         singer = request.POST['singer']
         tag = request.POST['tag']
-        # image = request.POST['image']
         image = request.FILES.get('image')  
         movie = request.POST['movie']
-        # credit = request.POST['credit']
         song1 = request.FILES['file']
 
         song_model = Song(name=name, singer=singer, tags=tag, image=image, movie=movie, song=song1)
@@ -191,13 +194,7 @@ def upload(request):
     return render(request, "musicbeats/upload.html")
 
 
-
-
-
-from django.core.mail import send_mail
-from django.contrib import messages
-from django.conf import settings
-
+########   Support_views   #########
 def support_page(request):
     return render(request, 'support.html')
 
@@ -220,3 +217,18 @@ def support_submit(request):
 
         messages.success(request, 'Thank you for contacting us! We’ll get back to you soon.')
         return redirect('support')
+    
+
+########   Profile_views   #########
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        if u_form.is_valid():
+            u_form.save()
+            return redirect('profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+
+    return render(request, 'profile.html', {'u_form': u_form})
+

@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-m0#b2-c-p4r=9totofef%=8sh26(8g5q8hmy#$q*(g)3$!xwhp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'Soundory.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -127,6 +127,9 @@ MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # APPEND_SLASH = False
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type

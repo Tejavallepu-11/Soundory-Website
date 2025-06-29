@@ -1,5 +1,5 @@
 {%extends 'musicbeats/basic.html'%}
-{% block title%}MusicBeats{% endblock %}
+{% block title%}Premium{% endblock %}
 
 {% block body %}
 {% load static %} 
@@ -27,7 +27,7 @@
                 <div class="card-body d-flex flex-column">
                     <h4 class="card-title">💰 Premium Plan</h4>
                     <p class="card-text mt-3">Starting at <strong>₹99/month</strong></p>
-                    <a href="#" class="btn btn-success mt-auto">Upgrade Now</a>
+                    <a href="#" onclick="alert('Premium upgrade is coming soon!')" class="btn btn-success mt-auto">Upgrade Now</a>
                 </div>
             </div>
         </div>
@@ -35,4 +35,5 @@
 
     <p class="mt-5 text-muted">Already a premium user? <a href="/">Enjoy Soundory</a></p>
 </div>
+
 {% endblock %}
