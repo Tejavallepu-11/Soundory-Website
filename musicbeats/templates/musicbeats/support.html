@@ -7,32 +7,50 @@
 <div class="container mt-5">
   <h2 class="mb-4 text-center">Help & Support</h2>
 
+  <!-- Django messages display -->
   {% if messages %}
     {% for message in messages %}
-      <div class="alert alert-success text-center">{{ message }}</div>
+      <div class="alert alert-{{ message.tags }} text-center">
+        {{ message }}
+      </div>
     {% endfor %}
   {% endif %}
 
-  <form method="POST" action="{% url 'support_submit' %}" class="col-md-8 mx-auto shadow p-4">
+  <!-- Support Form -->
+  <form method="POST" action="{% url 'support_submit' %}" enctype="multipart/form-data" class="col-md-8 mx-auto shadow p-4 rounded bg-light">
     {% csrf_token %}
+
     <div class="mb-3">
       <label class="form-label">👤 Your Name</label>
-      <input type="text" name="name" class="form-control" required>
+      <input type="text" name="name" class="form-control" placeholder="e.g. John Doe" required>
     </div>
 
     <div class="mb-3">
       <label class="form-label">📧 Your Email</label>
-      <input type="email" name="email" class="form-control" required>
+      <input type="email" name="email" class="form-control" placeholder="e.g. john@example.com" required>
     </div>
 
     <div class="mb-3">
       <label class="form-label">💬 Message</label>
-      <textarea name="message" rows="5" class="form-control" required></textarea>
+      <textarea name="message" rows="5" class="form-control" placeholder="Type your message here..." required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">📎 Upload File (optional)</label>
+      <input type="file" name="file" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">🖼️ Upload Image (optional)</label>
+      <input type="file" name="image" accept="image/*" class="form-control">
     </div>
 
     <button type="submit" class="btn btn-primary w-100">Send Message</button>
   </form>
 
-  <p class="text-center mt-5 text-muted">Need urgent help? Email us at <strong>support@soundory.com</strong></p>
+  <p class="text-center mt-5 text-muted">
+    Need urgent help? Email us at <strong>support@soundory.com</strong>
+  </p>
 </div>
+
 {% endblock %}

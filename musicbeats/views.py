@@ -8,6 +8,8 @@ from .forms import UserUpdateForm
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.conf import settings
+from django.core.mail import EmailMessage
+
 
 ########   Search_views   #########
 def search(request):
@@ -198,26 +200,59 @@ def upload(request):
 def support_page(request):
     return render(request, 'support.html')
 
+# def support_submit(request):
+#     if request.method == 'POST':
+#         name = request.POST['name']
+#         email = request.POST['email']
+#         message = request.POST['message']
+
+#         full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+
+#         # Send email to admin/support (only if email setup is configured)
+#         send_mail(
+#             subject=f'Support Request from {name}',
+#             message=full_message,
+#             from_email=settings.DEFAULT_FROM_EMAIL,
+#             recipient_list=[settings.DEFAULT_FROM_EMAIL],
+#             fail_silently=False
+#         )
+
+#         messages.success(request, 'Thank you for contacting us! We’ll get back to you soon.')
+#         return redirect('support')
 def support_submit(request):
     if request.method == 'POST':
-        name = request.POST['name']
-        email = request.POST['email']
-        message = request.POST['message']
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        file = request.FILES.get('file')      # Optional file
+        image = request.FILES.get('image')    # Optional image
 
         full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
 
-        # Send email to admin/support (only if email setup is configured)
-        send_mail(
+        email_msg = EmailMessage(
             subject=f'Support Request from {name}',
-            message=full_message,
+            body=full_message,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.DEFAULT_FROM_EMAIL],
-            fail_silently=False
+            to=[settings.DEFAULT_FROM_EMAIL],
+            reply_to=[email],
         )
 
-        messages.success(request, 'Thank you for contacting us! We’ll get back to you soon.')
+        # Attach files only if present
+        if file:
+            email_msg.attach(file.name, file.read(), file.content_type)
+
+        if image:
+            email_msg.attach(image.name, image.read(), image.content_type)
+
+        try:
+            email_msg.send()
+            messages.success(request, 'Thank you for contacting us! We’ll get back to you soon.')
+        except Exception as e:
+            print("Error sending email:", e)
+            messages.error(request, 'Sorry, there was a problem sending your message.')
+
         return redirect('support')
-    
 
 ########   Profile_views   #########
 @login_required

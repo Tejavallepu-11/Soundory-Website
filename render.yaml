@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: soundory-web
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn soundory.wsgi"
-    pythonVersion: 3.10.12
-    autoDeploy: true
