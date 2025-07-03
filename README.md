@@ -4,7 +4,20 @@ Soundory is a full-stack Django web application that allows users to explore and
 
 ---
 
-# Features
+## 🔥 Demo Screenshots
+
+### 🏠 Home Page
+![Home Page](images/homepage.png)
+
+### 🔐 Login Page
+![Login Page](images/loginpage.png)
+
+### 🎵 Playlist
+![Song](images/songspage.png)
+
+---
+
+## 🚀 Features
 
 - 🎵 Stream Songs & Add to Playlist  
 - 🎙️ Explore Podcasts & Audiobooks  
@@ -13,10 +26,12 @@ Soundory is a full-stack Django web application that allows users to explore and
 - ❤️ Watch Later Playlist  
 - ✉️ Support Page with Email Integration  
 
+---
 
 ## 🔧 Tech Stack
 
 - **Backend**: Python, Django  
 - **Frontend**: HTML, CSS, Bootstrap, JavaScript  
-- **Database**: SQLite 
-- **Other**: Pillow (for image handling), Gmail SMTP for email
+- **Database**: SQLite  
+- **Other**: Pillow (for image handling), Gmail SMTP for email  
+
