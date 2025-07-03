@@ -7,13 +7,13 @@ Soundory is a full-stack Django web application that allows users to explore and
 ## 🔥 Demo Screenshots
 
 ### 🏠 Home Page  
-<img src="media/images/homepage.png" alt="Home Page" width="600"/>
+<img src="media/images/homepage.png" alt="Home Page" width="400"/>
 
 ### 🔐 Login Page  
-<img src="media/images/loginpage.png" alt="Login Page" width="600"/>
+<img src="media/images/loginpage.png" alt="Login Page" width="400"/>
 
 ### 🎵 Playlist  
-<img src="media/images/songspage.png" alt="Playlist Page" width="600"/>
+<img src="media/images/songspage.png" alt="Playlist Page" width="400"/>
 
 
 ---
