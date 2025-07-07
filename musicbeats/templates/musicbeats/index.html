@@ -1,6 +1,5 @@
 {%extends 'musicbeats/basic.html'%}
 {% block title%}Soundory{% endblock %}
-
 {% block body %}
     {% load static %} 
     <!-- 💡 CSS Styling -->
@@ -41,7 +40,36 @@
     background: #1DB954;
     border-radius: 10px;
   }
+
+  @keyframes shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(10deg); }
+    50% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+  }
+
+  .shake {
+    display: inline-block;
+    animation: shake 0.6s ease-in-out infinite;
+  }
+  .shake-on-hover:hover {
+    animation: shake 0.6s ease-in-out;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1); }
+    50% {
+      transform: scale(1.1); }
+  }
+  
+  .pulse {
+    display: inline-block;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  
 </style>
+
 
 <!-- 🎵 HERO SECTION -->
 <div class="hero-section text-white" style="
@@ -51,8 +79,9 @@
     border-radius: 0 0 40px 40px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);">
   <div class="container">
+    
     <h1 class="display-3 fw-bold mb-3" style="font-family: 'Segoe UI', sans-serif;">
-      🎵 Welcome to <span style="color: #1DB954;">Soundory</span>
+      <span class="shake">🎵</span> Welcome to <span style="color: #1DB954;">Soundory</span>
     </h1>
     <p class="hero-subtitle mb-4">Music. Reimagined with Soundory.</p>
 
@@ -65,7 +94,7 @@
 </div>
 
 <!-- 🔥 TRENDING SONGS -->
-<h2 class="section-title mt-5 mb-3">🔥 Trending Songs</h2>
+<h2 class="section-title mt-5 mb-3"><img src="/media/images/Music Logo.png/" width=100px;> Trending Songs</h2>
 
 <div class="container-fluid px-5">
   <div class="d-flex flex-row overflow-auto pb-3 scroll-x" style="gap: 20px; scroll-snap-type: x mandatory;">
@@ -77,7 +106,7 @@
         <h5 class="card-title">{{ i.name }}</h5>
         <p><span class="tag-badge">{{ i.tags }}</span></p>
         <p class="card-text">🎬 {{ i.movie }}</p>
-        <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-success w-100">🎧 Listen Song</a>
+        <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-success w-100"><span class="shake-on-hover" style="display:inline-block;">🎧</span> Listen Song</a>
       </div>
     </div>
     {% endfor %}
@@ -87,7 +116,7 @@
 <hr>
 
 <!-- 🎧 YOUR PLAYLIST -->
-<h3 class="section-title mt-5 mb-3">🎧 Your Playlist Songs</h3>
+<h3 class="section-title mt-5 mb-3"><span class="shake">🎧</span> Your Playlist Songs</h3>
 
 <div class="container-fluid px-5">
   <div class="d-flex flex-row overflow-auto pb-3 scroll-x" style="gap: 20px; scroll-snap-type: x mandatory;">
@@ -99,7 +128,7 @@
         <h5 class="card-title">{{ i.name }}</h5>
         <p><span class="tag-badge">{{ i.tags }}</span></p>
         <p class="card-text">🎬 {{ i.movie }}</p>
-        <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-danger w-100">🎧 Listen Song</a>
+        <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-danger w-100"><span class="shake-on-hover" style="display:inline-block;">🎧</span> Listen Song</a>
       </div>
     </div>
     {% endfor %}
@@ -109,7 +138,7 @@
 <hr>
 
 <!-- ❤️ LIKED SONGS -->
-<h3 class="section-title mt-5 mb-3">❤️ Your Liked Songs</h3>
+<h3 class="section-title mt-5 mb-3"><span class="pulse">❤️</span> Your Liked Songs</h3>
 
 <div class="container-fluid px-5">
   <div class="d-flex flex-row overflow-auto pb-3 scroll-x" style="gap: 20px; scroll-snap-type: x mandatory;">
@@ -121,7 +150,7 @@
         <h5 class="card-title">{{ i.name }}</h5>
         <p><span class="tag-badge">{{ i.tags }}</span></p>
         <p class="card-text">🎬 {{ i.movie }}</p>
-        <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-danger w-100">🎧 Listen Song</a>
+        <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-danger w-100"><span class="shake-on-hover" style="display:inline-block;">🎧</span> Listen Song</a>
       </div>
     </div>
     {% endfor %}
@@ -129,6 +158,7 @@
 </div>
 
 <hr>
+
 
 {% endblock %}
 

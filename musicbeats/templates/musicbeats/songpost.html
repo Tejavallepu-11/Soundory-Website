@@ -1,8 +1,32 @@
 {%extends 'musicbeats/basic.html'%}
 {% block title%}All Songs{% endblock %}
 
-{% block body %}
 
+{% block body %}
+{% load static %} 
+    <!-- 💡 CSS Styling -->
+<style>
+  @keyframes bounce-down {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+  }
+  
+  .bounce-down {
+    display: inline-block;
+    animation: bounce-down 1.2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1); }
+    50% {
+      transform: scale(1.1); }
+  }
+  
+  .pulse {
+    display: inline-block;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+</style>
 {% if message%}
 <script>
     Swal.fire({
@@ -57,7 +81,8 @@
           
           <!-- Download -->
           <a href="/media/{{ song.song }}" download>
-            <button class="btn btn-outline-success ml-2">⬇️ Download</button>
+            <button class="btn btn-outline-success ml-2">Download <span class="bounce-down">⬇️</span>
+            </button>
           </a>
   
           {% comment %} <!-- Like -->
@@ -72,9 +97,9 @@
             <input type="hidden" name="video_id" value="{{ song.song_id }}">
             <button type="submit" class="btn btn-outline-danger ml-2">
               {% if song.song_id in liked_ids %}
-                ❤️ Unlike
+              <span class="pulse">❤️</span> Unlike
               {% else %}
-                🤍 Like
+              <span class="pulse">❤️</span> Like
               {% endif %}
             </button>
           </form>

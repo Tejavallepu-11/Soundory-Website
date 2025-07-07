@@ -11,6 +11,27 @@
     <script src="/media/images/soundmanagerv297a-20170601/script/soundmanager2.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /> 
 
+    <style>
+      @keyframes shake {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(10deg); }
+        50% { transform: rotate(-10deg); }
+        75% { transform: rotate(10deg); }
+      }
+      .shake {
+        display: inline-block;
+        animation: shake 0.6s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%, 100% {transform: scale(1); }
+        50% {transform: scale(1.1); }
+      }
+      
+      .pulse {
+        display: inline-block;
+        animation: pulse 3s ease-in-out infinite;
+      }
+    </style>
     <title>{% block title %} {% endblock %}</title>
   </head>
   <body style="padding-top: 55px;">
@@ -18,7 +39,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark  px-3 " style=" background: linear-gradient(to right, #2c3e50, #34495e);
   position: fixed; top: 0; left: 0; width: 100%; z-index: 999; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
       <a class="navbar-brand d-flex align-items-center" href="/" style="color: #63E6BE;">
-        <i class="fa-solid fa-music fa-lg mr-2" style="color: #63E6BE;"></i> Soundory
+        <span class="shake"><i class="fa-solid fa-music fa-lg mr-2" style="color: #63E6BE;"></i></span> Soundory
+        {% comment %} <img src="/media/images/Music Logo.png/" width=120px; height=40px;> {% endcomment %}
       </a>
     
       <!-- Toggle button for collapsed navbar -->
@@ -55,12 +77,12 @@
               Welcome <i class="fa-solid fa-circle-user fa-lg" style="color: #63E6BE;"></i> {{ request.user }}
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/musicbeats/profile">Profile</a>
-              <a class="dropdown-item" href="/musicbeats/c/{{request.user}}">Your Channel</a>
-              <a class="dropdown-item" href="/musicbeats/upload">Upload Your Song</a>
-              <a class="dropdown-item" href="/musicbeats/watchlater">Your Playlist</a>
-              <a class="dropdown-item" href="/musicbeats/history">History</a>
-              <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+              <a class="dropdown-item" href="/musicbeats/profile"><i class="fa-solid fa-user" style="color: #63E6BE;"></i> Profile</a>
+              <a class="dropdown-item" href="/musicbeats/c/{{request.user}}"><i class="fa-solid fa-headphones" style="color: #63E6BE;"></i> Your Channel</a>
+              <a class="dropdown-item" href="/musicbeats/upload"><i class="fa-solid fa-upload" style="color: #63E6BE;"></i> Upload Your Song</a>
+              <a class="dropdown-item" href="/musicbeats/watchlater"><i class="fa-solid fa-music" style="color: #63E6BE;"></i> Your Playlist</a>
+              <a class="dropdown-item" href="/musicbeats/history"><i class="fa-solid fa-clock-rotate-left" style="color: #63E6BE;"></i> History</a>
+              <a class="dropdown-item" href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket" style="color: #63E6BE;"></i> Logout</a>
             </div>
           </li>
         </ul>
@@ -86,7 +108,7 @@
             <button class="btn btn-outline-info btn-sm px-4 rounded-pill">Login</button>
           </a>
           <a href="/musicbeats/signup">
-            <button class="btn btn-info btn-sm px-4 rounded-pill">Signup</button>
+            <button class="btn btn-info btn-sm px-4 rounded-pill pulse">Signup</button>
           </a>
         </div>
         {% endif %}
@@ -98,7 +120,7 @@
     {% endblock %}
 
 
-<footer style="background: linear-gradient(135deg, #1c1c1c, #343a40); color: #fff; padding: 40px 0; margin-top: 60px;">
+<footer style="background: linear-gradient(to right, #2c3e50, #34495e); color: #fff; padding: 40px 0; margin-top: 60px;">
   <div class="container text-center">
     <h4 style="font-family: 'Dancing Script', cursive; font-size: 28px; color: #ffdd57;">
       Thank you for visiting Soundory 🎧
@@ -112,12 +134,24 @@
     </p>
 
     <div class="my-3">
-      <a href="#" class="text-light mx-2 fs-5"><i class="fab fa-facebook-f"></i></a>
-      <a href="#" class="text-light mx-2 fs-5"><i class="fab fa-twitter"></i></a>
-      <a href="#" class="text-light mx-2 fs-5"><i class="fab fa-instagram"></i></a>
-      <a href="#" class="text-light mx-2 fs-5"><i class="fab fa-github"></i></a>
+      <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/musicbeats/songs/">Explore Music</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/musicbeats/podcast/">Podcasts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/musicbeats/premium/">Premium</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/musicbeats/support/">Help & Support</a>
+        </li>
+      </ul>
     </div>
-
     <p class="mb-0" style="font-size: 14px; opacity: 0.8;">
       &copy; 2025 Soundory. All rights reserved.
     </p>

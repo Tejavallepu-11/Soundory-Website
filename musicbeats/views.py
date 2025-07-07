@@ -152,6 +152,34 @@ def signup(request):
 
         channel = Channel(name=username)
         channel.save()
+        
+        # Send thank-you email
+        subject = '🎧 Welcome to Soundory!'
+        # message = f"Hi {first_name},\n\nThank you for registering with Soundory.\nWe're thrilled to have you onboard!\n\nEnjoy the music! 🎶\n\n- Team Soundory"
+        message = f"""
+Hi {first_name},
+
+Thank you for signing up with Soundory – your one-stop platform to experience the rhythm of life!
+
+We’re thrilled to have you join our vibrant music community. At Soundory, you can:
+🎵 Discover trending and classic songs  
+📁 Create and manage your own playlists  
+🔎 Explore music by your favorite artists and genres  
+💚 Enjoy a personalized listening experience
+
+Our mission is to bring joy to your ears and soul. We're constantly adding new features, so stay tuned for updates!
+
+If you ever need help or want to give us feedback, feel free to contact us at support@soundory.com. We're here to make your journey smooth and sound-ful!
+
+Welcome aboard, {first_name}!  
+Let the music play 🎶
+
+Warm regards,  
+Team Soundory  
+"""
+        from_email = None  # Uses DEFAULT_FROM_EMAIL from settings.py
+        recipient_list = [email]
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
         return redirect('/')
 
