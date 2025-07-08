@@ -1,52 +1,76 @@
 {% extends 'musicbeats/basic.html' %}
 {% block title %}SignUp{% endblock %}
+{% block extra_styles %}
+body {
+  background-image: url('/media/images/BodyBG.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 100vh;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+{% endblock %}
 
 {% block body %}
-    <div class="container d-flex justify-content-center align-items-center vh-80 mt-3">
-      <div class="card shadow-lg p-4" style="width: 420px; border-radius: 20px;">
-        <h3 class="text-center mb-3">🎧 Join <span style="color:#63E6BE;">Soundory</span></h3>
-        <p class="text-muted text-center mb-4">Create your free account</p>
     
-        <form method="POST" action="/musicbeats/signup/">
-          {% csrf_token %}
-    
-          <div class="mb-3">
-            <label for="email" class="form-label">📧 Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
-          </div>
-    
-          <div class="mb-3">
-            <label for="username" class="form-label">👤 Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Choose a username" required>
-          </div>
-    
-          <div class="mb-3">
-            <label for="firstname" class="form-label">🧑 First Name</label>
-            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Your first name" required>
-          </div>
-    
-          <div class="mb-3">
-            <label for="lastname" class="form-label">👪 Last Name</label>
-            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Your last name" required>
-          </div>
-    
-          <div class="mb-3">
-            <label for="pass1" class="form-label">🔒 Password</label>
-            <input type="password" class="form-control" id="pass1" name="pass1" placeholder="••••••••" required>
-          </div>
-    
-          <div class="mb-4">
-            <label for="pass2" class="form-label">🔐 Confirm Password</label>
-            <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Repeat your password" required>
-          </div>
-    
-          <button type="submit" class="btn btn-primary w-100">Sign Up</button>
-        </form>
-    
-        <p class="mt-4 text-center">
-          Already a member? <a href="/musicbeats/login" class="text-decoration-none">Login</a>
-        </p>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+  <div class="card shadow-lg p-4" style="width: 650px; border-radius: 20px; background-color: rgba(255, 255, 255, 0.95);">
+    <h3 class="text-center mb-3">🎧 Join <span style="color:#63E6BE;">Soundory</span></h3>
+    <p class="text-muted text-center mb-4">Create your free account</p>
+
+    <form method="POST" action="/musicbeats/signup/">
+      {% csrf_token %}
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="email" class="form-label">📧 Email</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="username" class="form-label">👤 Username</label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Choose a username" required>
+        </div>
       </div>
-    </div>
-    
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="firstname" class="form-label">🧑 First Name</label>
+          <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Your first name" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="lastname" class="form-label">👪 Last Name</label>
+          <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Your last name" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="pass1" class="form-label">🔒 Password</label>
+          <input type="password" class="form-control" id="pass1" name="pass1" placeholder="••••••••" required>
+        </div>
+
+        <div class="col-md-6 mb-4">
+          <label for="pass2" class="form-label">🔐 Confirm Password</label>
+          <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Repeat your password" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+    </form>
+    <p class="mt-3 text-center">
+      Already a member? <a href="/musicbeats/login" class="text-decoration-none">Login</a>
+    </p>
+  </div>
+</div>
    {% endblock %}

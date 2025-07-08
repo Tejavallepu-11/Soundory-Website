@@ -144,3 +144,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'vidhyanand067@gmail.com'
 EMAIL_HOST_PASSWORD = 'fxropzefiuoyxnzd'  # <- paste the app password here
 DEFAULT_FROM_EMAIL = 'vidhyanand067@gmail.com'
+
+LOGIN_URL = '/musicbeats/login/'
+LOGIN_REDIRECT_URL = '/'  # After login, go to homepage

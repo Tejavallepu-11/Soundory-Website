@@ -127,7 +127,7 @@ def login(request):
                 <button style="margin-top:20px; padding:10px 20px; background:#dc3545; color:white; border:none; border-radius:5px;">Back to Login</button>
             </a></div>""")
         
-    return render(request,'musicbeats/login.html')
+    return render(request,'musicbeats/login.html', {'hide_nav_footer': True})
 
 
 ########   Signup_views   #########
@@ -183,7 +183,7 @@ Team Soundory
 
         return redirect('/')
 
-    return render(request, 'musicbeats/signup.html')
+    return render(request, 'musicbeats/signup.html', {'hide_nav_footer': True})
 
 ########   LogOut_views   #########
 def logout_user(request):
