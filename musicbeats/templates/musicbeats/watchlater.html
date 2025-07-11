@@ -2,32 +2,56 @@
 {% block title%}Your Playlist{% endblock %}
 
 {% block body %}
-{% load static %} 
-<h1 style="color: rgb(158, 60, 60); text-align: center;">Your Playlist</h1>
+{% load static %}
+<style>
+  .card:hover {
+    transform: scale(1.01);
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .btn-outline-success {
+    border-radius: 50px;
+    padding: 6px 20px;
+  }
+  
+</style> 
+<h1 style="color: rgb(158, 60, 60); text-align: center;" class="title mt-3">Your Playlist</h1>
 
 {% if song|length < 1 %}
         <h3 style="text-align: center; padding-top: 5%;">You have no Songs in your Playlist</h3>
 {% endif %}
+<div class="container my-5">
+  <div class="row">
+    {% for i in song reversed %}
+    <div class="col-12 col-md-6 mb-4 d-flex justify-content-center">
+      <div class="card shadow-lg border-0 w-100" style="max-width: 600px; border-radius: 20px; overflow: hidden;">
+        <div class="row g-0">
+          
+          <!-- Image Section -->
+          <div class="col-12 col-sm-5">
+            <img src="/media/{{ i.image }}" class="img-fluid h-100 w-100" style="object-fit: cover;" alt="{{ i.name }}">
+          </div>
+          
+          <!-- Content Section -->
+          <div class="col-12 col-sm-7 bg-light">
+            <div class="card-body px-3 py-3 h-100">
+              <h5 class="card-title mb-2" style="color: #2ecc71; font-weight: 600;">{{ i.name }}</h5>
+              <p class="card-text mb-1"><strong>Tags:</strong> {{ i.tags }}</p>
+              <p class="card-text mb-3"><strong>Movie:</strong> {{ i.movie }}</p>
+              <a href="/musicbeats/songs/{{ i.song_id }}" class="btn btn-outline-success w-100">🎵 Listen Song</a>
+            </div>
+          </div>
 
-<div class="container">
-{% for i in song reversed %}
-<div class="card mb-3" style="max-width: 940px; padding-top: 0%;">
-    <div class="row no-gutters">
-      <div class="col-md-4">
-        <img src="/media/{{i.image}}" class="card-img" alt="...">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title" style="color: green; font-weight: 550;">{{i.name}}</h5>
-          <p class="card-text">Tags: {{i.tags}}</p>
-          <p class="card-text">Movie: {{i.movie}}</p>
-          <a href="/musicbeats/songs/{{i.song_id}}"><button class="btn btn-outline-danger">Listen Song</button></a>
         </div>
       </div>
     </div>
+    {% endfor %}
   </div>
-  {% endfor %}
-</div>
 </div>
 
 {% endblock %}

@@ -228,25 +228,6 @@ def upload(request):
 def support_page(request):
     return render(request, 'support.html')
 
-# def support_submit(request):
-#     if request.method == 'POST':
-#         name = request.POST['name']
-#         email = request.POST['email']
-#         message = request.POST['message']
-
-#         full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
-
-#         # Send email to admin/support (only if email setup is configured)
-#         send_mail(
-#             subject=f'Support Request from {name}',
-#             message=full_message,
-#             from_email=settings.DEFAULT_FROM_EMAIL,
-#             recipient_list=[settings.DEFAULT_FROM_EMAIL],
-#             fail_silently=False
-#         )
-
-#         messages.success(request, 'Thank you for contacting us! We’ll get back to you soon.')
-#         return redirect('support')
 def support_submit(request):
     if request.method == 'POST':
         name = request.POST.get('name')

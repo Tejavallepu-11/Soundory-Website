@@ -44,7 +44,7 @@ class History(models.Model):
     hist_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     music_id = models.CharField(max_length=10000000, default="")
-    
+
 ##################   Channel_Model   #####################
 class Channel(models.Model):
     channel_id = models.AutoField(primary_key=True)

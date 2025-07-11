@@ -2,7 +2,7 @@
 {% block title%}All Songs{% endblock %}
 
 {% block body %}
-<div class="container">
+{% comment %} <div class="container">
 
     <div style=" padding-top:3%; padding-bottom:2%; font-size:150%; color:grey;">
         Your Search Result for {{query}}:
@@ -33,6 +33,46 @@
     </div>
   </div>
   {% endfor %}
+</div> {% endcomment %}
+
+<div class="container my-5">
+  <div style=" padding-top:3%; padding-bottom:2%; font-size:150%; color:grey;">
+    Your Search Result for {{query}}:
+</div>
+
+  <div class="row">
+    {% for i in songs reversed %}
+    <div class="col-12 col-md-6 mb-4 d-flex justify-content-center">
+      <div class="card shadow-lg border-0 w-100" style="max-width: 600px; border-radius: 20px; overflow: hidden;">
+        <div class="row g-0">
+          
+          <!-- Image Section -->
+          <div class="col-12 col-sm-5">
+            <img src="/media/{{ i.image }}" class="img-fluid h-100 w-100" style="object-fit: cover;" alt="{{ i.name }}">
+          </div>
+          
+          <!-- Content Section -->
+          <div class="col-12 col-sm-7 bg-light">
+            <div class="card-body px-3 py-3 h-100">
+              <h5 class="card-title mb-2" style="color: #2ecc71; font-weight: 600;">{{ i.name }}</h5>
+              <p class="card-text mb-1"><strong>Tags:</strong> {{ i.tags }}</p>
+              <p class="card-text mb-3"><strong>Movie:</strong> {{ i.movie }}</p>
+              {% if user.is_authenticated %}
+              <form action="/musicbeats/history" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="music_id" value="{{ i.song_id }}">
+                <button type="submit" class="btn btn-outline-success btn-sm w-100 ">🎵 Listen Song</button>
+              </form>
+              {% else %}
+              <a href="/musicbeats/songs/{{ i.song_id }}" class="btn btn-outline-success btn-sm w-100">🎵 Listen Song</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
 
