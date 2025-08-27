@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.db.models import Case, When
 
+
 @login_required(login_url='/musicbeats/login/')
 def index(request):
     song = Song.objects.all()[0:5]
@@ -29,5 +30,6 @@ def index(request):
         preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(liked_ids)])
         likes_qs = Song.objects.filter(song_id__in=liked_ids).order_by(preserved)
         user_likes = reversed(likes_qs)
-        
+    
+    
     return render(request, 'index.html', {'song': song, 'watch': watch, 'user_likes': user_likes})
