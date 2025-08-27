@@ -60,51 +60,41 @@
         </audio>
   
         <!-- Action Buttons -->
-        <div class="d-flex flex-wrap gap-2">
-          <!-- Watch Later -->
-          {% comment %} <form action="/musicbeats/watchlater/" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="video_id" value="{{ song.song_id }}">
-            <button type="submit" class="btn btn-outline-danger">➕ Add to Playlist</button>
-          </form> {% endcomment %}
-          <form action="{% url 'watchlater' %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="video_id" value="{{ song.song_id }}">
-            <button type="submit" class="btn btn-outline-primary">
-              {% if song.song_id in watchlater_ids %}
-                Remove from Playlist
-              {% else %}
-                Add to Playlist
-              {% endif %}
-            </button>
-          </form>
-          
-          <!-- Download -->
-          <a href="/media/{{ song.song }}" download>
-            <button class="btn btn-outline-success ml-2">Download <span class="bounce-down">⬇️</span>
-            </button>
-          </a>
-  
-          {% comment %} <!-- Like -->
-          <form action="/musicbeats/liked/" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="video_id" value="{{ song.song_id }}">
-            <button type="submit" class="btn btn-outline-primary ml-2">❤️ Like</button>
-          </form> {% endcomment %}
+         <div class="d-flex justify-content-center flex-wrap gap-3 text-center">
 
-          <form action="{% url 'liked' %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="video_id" value="{{ song.song_id }}">
-            <button type="submit" class="btn btn-outline-danger ml-2">
-              {% if song.song_id in liked_ids %}
-              <span class="pulse">❤️</span> Unlike
-              {% else %}
-              <span class="pulse">❤️</span> Like
-              {% endif %}
-            </button>
-          </form>
-          
-        </div>
+  <!-- Watch Later -->
+  <form action="{% url 'watchlater' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="video_id" value="{{ song.song_id }}">
+    <button type="submit" class="btn">
+      {% if song.song_id in watchlater_ids %}
+        <i class="fa-solid fa-circle-check fa-2xl" style="color: #0b61a3ff;"></i>
+      {% else %}
+        <i class="fa-solid fa-circle-plus fa-2xl" style="color: #0b61a3ff;"></i>
+      {% endif %}
+    </button>
+  </form>
+
+  <!-- Download -->
+  <a href="/media/{{ song.song }}" download class="btn" title="Download">
+    <i class="fa-regular fa-circle-down fa-2xl"></i>
+  </a>
+
+  <!-- Like -->
+  <form action="{% url 'liked' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="video_id" value="{{ song.song_id }}">
+    <button type="submit" class="btn">
+      {% if song.song_id in liked_ids %}
+        <i class="fa-solid fa-heart fa-2xl" style="color: #e20808;"></i>
+      {% else %}
+        <i class="fa-regular fa-heart fa-2xl" style="color: #e20808;"></i>
+      {% endif %}
+    </button>
+  </form>
+
+</div>
+
       </div>
     </div>
   </div>
@@ -120,3 +110,23 @@
 
 
 
+<!-- Download -->
+          {% comment %} <a href="/media/{{ song.song }}" download>
+            <button class="btn btn-outline-success ml-2">Download <span class="bounce-down">⬇️</span></button>
+          </a> {% endcomment %}
+
+
+           {% comment %} <!-- Like -->
+          <form action="/musicbeats/liked/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="video_id" value="{{ song.song_id }}">
+            <button type="submit" class="btn btn-outline-primary ml-2">❤️ Like</button>
+          </form> {% endcomment %}
+
+
+          <!-- Watch Later -->
+          {% comment %} <form action="/musicbeats/watchlater/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="video_id" value="{{ song.song_id }}">
+            <button type="submit" class="btn btn-outline-danger">➕ Add to Playlist</button>
+          </form> {% endcomment %}
