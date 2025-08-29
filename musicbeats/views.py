@@ -108,7 +108,8 @@ def songpost(request,id):
     song=Song.objects.filter(song_id=id).first()
     return render(request, 'musicbeats/songpost.html',{'song':song})
 
-
+def main(request):
+    return render(request, 'main.html', {'hide_nav_footer': True})
 ########   Login_views   ########
 def login(request):
     if request.method=="POST":
@@ -119,7 +120,7 @@ def login(request):
         # login(request,user)
         if user:
             django_login(request,user)
-            return redirect('/')
+            return redirect('index')
         else:
             return HttpResponse("""<div style="text-align:center; margin-top:50px;">
             <h2 style="color:red;">Invalid Credentials</h2>
@@ -153,35 +154,38 @@ def signup(request):
         channel = Channel(name=username)
         channel.save()
         
-        # Send thank-you email
         subject = '🎧 Welcome to Soundory!'
-        # message = f"Hi {first_name},\n\nThank you for registering with Soundory.\nWe're thrilled to have you onboard!\n\nEnjoy the music! 🎶\n\n- Team Soundory"
+
         message = f"""
 Hi {first_name},
 
-Thank you for signing up with Soundory – your one-stop platform to experience the rhythm of life!
+Thank you for signing up with Soundory – your ultimate platform to experience the rhythm of life!
 
-We’re thrilled to have you join our vibrant music community. At Soundory, you can:
+We’re excited to have you join our music community. With Soundory, you can:
 🎵 Discover trending and classic songs  
-📁 Create and manage your own playlists  
+📁 Create and manage your playlists  
 🔎 Explore music by your favorite artists and genres  
 💚 Enjoy a personalized listening experience
 
-Our mission is to bring joy to your ears and soul. We're constantly adding new features, so stay tuned for updates!
+Check out our website and start exploring: https://soundorymusic.onrender.com
 
-If you ever need help or want to give us feedback, feel free to contact us at support@soundory.com. We're here to make your journey smooth and sound-ful!
+Our mission is to bring joy to your ears and soul. We're always adding new features, so stay tuned for updates!
+
+Need help or want to share feedback? Reach us at support@soundory.com – we're here to make your experience smooth and sound-ful!
 
 Welcome aboard, {first_name}!  
 Let the music play 🎶
 
 Warm regards,  
-Team Soundory  
+Team Soundory
 """
+
+
         from_email = None  # Uses DEFAULT_FROM_EMAIL from settings.py
         recipient_list = [email]
         send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
-        return redirect('/')
+        return redirect('index')
 
     return render(request, 'musicbeats/signup.html', {'hide_nav_footer': True})
 
@@ -275,4 +279,28 @@ def profile(request):
         u_form = UserUpdateForm(instance=request.user)
 
     return render(request, 'profile.html', {'u_form': u_form})
+@login_required(login_url='/musicbeats/login/')
+def index(request):
+    song = Song.objects.all()[0:5]
 
+    # Default values
+    # watch = Song.objects.all()
+    # user_likes = Song.objects.all()
+    watch = Song.objects.none()
+    user_likes = Song.objects.none()
+
+    # Only if user is authenticated (ensured by @login_required)
+    watch_ids = list(Watchlater.objects.filter(user=request.user).values_list('video_id', flat=True))
+    if watch_ids:
+        preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(watch_ids)])
+        watch_qs = Song.objects.filter(song_id__in=watch_ids).order_by(preserved)
+        watch = reversed(watch_qs)
+
+    liked_ids = list(liked.objects.filter(user=request.user).values_list('video_id', flat=True))
+    if liked_ids:
+        preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(liked_ids)])
+        likes_qs = Song.objects.filter(song_id__in=liked_ids).order_by(preserved)
+        user_likes = reversed(likes_qs)
+    
+    
+    return render(request, 'index.html', {'song': song, 'watch': watch, 'user_likes': user_likes})

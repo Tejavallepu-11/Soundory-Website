@@ -21,7 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index,name='index'),
+    path('index', views.index,name='index'),
+    path('', views.main, name='main'),
     
     path('musicbeats/',include('musicbeats.urls'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

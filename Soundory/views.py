@@ -33,3 +33,9 @@ def index(request):
     
     
     return render(request, 'index.html', {'song': song, 'watch': watch, 'user_likes': user_likes})
+
+# Soundory/views.py
+from django.shortcuts import render
+
+def main(request):
+    return render(request, 'main.html', {'hide_nav_footer': True})
