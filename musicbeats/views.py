@@ -302,5 +302,5 @@ def index(request):
         likes_qs = Song.objects.filter(song_id__in=liked_ids).order_by(preserved)
         user_likes = reversed(likes_qs)
     
-    
-    return render(request, 'index.html', {'song': song, 'watch': watch, 'user_likes': user_likes})
+    podcasts = Podcast.objects.all()
+    return render(request, 'index.html', {'song': song, 'watch': watch, 'user_likes': user_likes, 'podcasts': podcasts})
