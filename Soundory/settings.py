@@ -12,11 +12,44 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = Path(__file__).resolve().parent.parent
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/js', 'serviceworker.js')
+
+PWA_APP_NAME = 'Soundory'
+PWA_APP_DESCRIPTION = "Soundory Progressive Web App"
+PWA_APP_THEME_COLOR = '#212121'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/images/icon-160x160.png',
+        'sizes': '160x160',
+        'type': 'image/png',
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/static/images/icon-160x160.png',
+        'sizes': '160x160',
+        'type': 'image/png',
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/images/icon.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-US'
 
 
 
@@ -41,8 +74,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'musicbeats',
-    'core'
+    'pwa',
+    'musicbeats'
 ]
 
 MIDDLEWARE = [
@@ -56,9 +89,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Soundory.urls'
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]  # if you have a static folder
-STATIC_ROOT = BASE_DIR / "staticfiles" 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
