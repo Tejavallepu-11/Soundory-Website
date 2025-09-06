@@ -2,8 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% progressive_web_app_meta %}
     <!-- Required meta tags -->
+    <title>{% block title %} {% endblock %}</title>
+    {% progressive_web_app_meta %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -15,7 +16,6 @@
     <!-- Latest Font Awesome 6 CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-
     <style>
       @keyframes shake {
         0%, 100% { transform: rotate(0deg); }
@@ -38,7 +38,6 @@
       }
       {% block extra_styles %} {% endblock %}
     </style>
-    <title>{% block title %} {% endblock %}</title>
   </head>
   <body style="padding-top: 55px;">
     {% load static %}
@@ -171,6 +170,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     {% block js %}
     {% endblock %}
+    {% comment %} {% progressive_web_app_script %} {% endcomment %}
 </body> 
 </html>
 
